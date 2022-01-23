@@ -33,8 +33,9 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        if (isEmpty())
+        if (isEmpty()) {
             return;
+        }
         if (first <= last) {
             for (int i = first; i <= last; i++) {
                 System.out.print(items[i] + " ");
@@ -50,7 +51,7 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (size == items.length){
+        if (size == items.length) {
             increSize();
         }
         if (first == 0) {
@@ -66,7 +67,7 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             increSize();
         }
-        if (last == items.length - 1){
+        if (last == items.length - 1) {
             last = 0;
         } else {
             last += 1;
