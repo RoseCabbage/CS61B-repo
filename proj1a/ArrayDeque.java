@@ -151,7 +151,7 @@ public class ArrayDeque<T> {
             return null;
         }
         int cur = first;
-        for (int i = 0; i <= index; i++) {
+        for (int i = 0; i < index; i++) {
             cur += 1;
             if (cur == items.length) {
                 cur = 0;
