@@ -7,11 +7,11 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
-        first = -1;
-        last = -1;
+        first = 0;
+        last = 0;
     }
 
-    // len = 10, start = 8, last = 5
+    // len = 10, first = 8, last = 5
 
     private void changeSize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
@@ -24,13 +24,12 @@ public class ArrayDeque<T> {
             }
             first = 0;
             last = size - 1;
-            items = temp;
         } else {
             first = -1;
-            last = -1;
+            last = 0;
             size = 0;
-            items = temp;
         }
+        items = temp;
     }
 
     private void increSize() {
@@ -63,7 +62,9 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             increSize();
         }
-        if (first == 0) {
+        if (size == 0) {
+            items[first] = item;
+        }else if (first == 0) {
             first = items.length - 1;
         } else {
             first -= 1;
@@ -76,7 +77,9 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             increSize();
         }
-        if (last == items.length - 1) {
+        if (size == 0) {
+            items[last] = item;
+        }else if (last == items.length - 1) {
             last = 0;
         } else {
             last += 1;
