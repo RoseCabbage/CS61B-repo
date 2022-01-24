@@ -25,7 +25,7 @@ public class ArrayDeque<T> {
             first = 0;
             last = size - 1;
         } else {
-            first = -1;
+            first = 0;
             last = 0;
             size = 0;
         }
@@ -64,13 +64,16 @@ public class ArrayDeque<T> {
         }
         if (size == 0) {
             items[first] = item;
-        }else if (first == 0) {
+            size++;
+        } else if (first == 0) {
             first = items.length - 1;
+            items[first] = item;
+            size++;
         } else {
             first -= 1;
+            items[first] = item;
+            size++;
         }
-        items[first] = item;
-        size++;
     }
 
     public void addLast(T item) {
@@ -79,13 +82,16 @@ public class ArrayDeque<T> {
         }
         if (size == 0) {
             items[last] = item;
-        }else if (last == items.length - 1) {
+            size++;
+        } else if (last == items.length - 1) {
             last = 0;
+            items[last] = item;
+            size++;
         } else {
             last += 1;
+            items[last] = item;
+            size++;
         }
-        items[last] = item;
-        size++;
     }
 
     public boolean isEmpty() {
@@ -97,6 +103,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         T itemToRemove = items[first];
         items[first] = null;
         if (first != items.length - 1) {
@@ -105,13 +114,20 @@ public class ArrayDeque<T> {
             first = 0;
         }
         size--;
-        if (size >= 8 && size < items.length / 4) {
+        if (items.length > 8 && size < items.length / 4) {
             decreSize();
+        }
+        if (size == 0) {
+            first = 0;
+            last = 0;
         }
         return itemToRemove;
     }
 
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         T itemToRemove = items[last];
         items[last] = null;
         if (last != 0) {
@@ -120,8 +136,12 @@ public class ArrayDeque<T> {
             last = items.length - 1;
         }
         size--;
-        if (size >= 8 && size < items.length / 4) {
+        if (items.length > 8 && size < items.length / 4) {
             decreSize();
+        }
+        if (size == 0) {
+            first = 0;
+            last = 0;
         }
         return itemToRemove;
     }
