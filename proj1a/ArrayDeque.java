@@ -11,17 +11,26 @@ public class ArrayDeque<T> {
         last = -1;
     }
 
+    // len = 10, start = 8, last = 5
+
     private void changeSize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
-        if (first <= last) {
-            System.arraycopy(items, first, temp, 0, last - first + 1);
+        if (size > 0) {
+            if (first <= last) {
+                System.arraycopy(items, first, temp, 0, last - first + 1);
+            } else {
+                System.arraycopy(items, first, temp, 0, items.length - first);
+                System.arraycopy(items, 0, temp, items.length - first, last + 1);
+            }
+            first = 0;
+            last = size - 1;
+            items = temp;
         } else {
-            System.arraycopy(items, first, temp, 0, items.length - first);
-            System.arraycopy(items, 0, temp, items.length - first, last + 1);
+            first = -1;
+            last = -1;
+            size = 0;
+            items = temp;
         }
-        first = 0;
-        last = size - 1;
-        items = temp;
     }
 
     private void increSize() {
@@ -93,7 +102,7 @@ public class ArrayDeque<T> {
             first = 0;
         }
         size--;
-        if (size < items.length / 4) {
+        if (size >= 8 && size < items.length / 4) {
             decreSize();
         }
         return itemToRemove;
@@ -108,7 +117,7 @@ public class ArrayDeque<T> {
             last = items.length - 1;
         }
         size--;
-        if (size < items.length / 4) {
+        if (size >= 8 && size < items.length / 4) {
             decreSize();
         }
         return itemToRemove;
